@@ -1,0 +1,27 @@
+- hosts: servers
+  become: true
+
+  tasks:
+
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name:
+          - python3-pip
+          - git
+        state: present
+
+    - name: Clone GitHub repo
+      git:
+        repo: "https://github.com/ashishh-81/chat-devops-project.git"
+        dest: /home/ubuntu/chat-app
+
+    - name: Install Python dependencies
+      pip:
+        requirements: /home/ubuntu/chat-app/app/requirements.txt
+
+    - name: Run Flask app
+      shell: nohup python3 /home/ubuntu/chat-app/app/app.py &
