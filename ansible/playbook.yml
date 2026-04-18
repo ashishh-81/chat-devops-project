@@ -32,6 +32,7 @@
 
     - name: Kill old app
       shell: pkill -f app.py || true
+      ignore_errors: yes
 
     - name: Run Flask app
       shell: nohup python3 /home/ubuntu/chat-app/app/app.py &
