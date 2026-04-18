@@ -2,7 +2,7 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-resource "aws_security_group" "chat_sg" {
+resource "aws_security_group" "chat_sg-1" {
   name = "chat-sg-1"
 
   ingress {
