@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "chat_sg" {
-  name = "chat-sg"
+  name = "chat-sg-1"
 
   ingress {
     from_port   = 22
