@@ -2,7 +2,7 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-resource "aws_security_group" "chat_sg-1" {
+resource "aws_security_group" "chat_sg_1" {
   name = "chat-sg-1"
 
   ingress {
@@ -32,7 +32,7 @@ resource "aws_instance" "chat_server" {
   instance_type = "t3.micro"
   key_name      = "chat-key"
 
-  vpc_security_group_ids = [aws_security_group.chat_sg.id]
+  vpc_security_group_ids = [aws_security_group.chat_sg_1.id]
 
   tags = {
     Name = "ChatServer"
