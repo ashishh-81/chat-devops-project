@@ -18,10 +18,20 @@
       git:
         repo: "https://github.com/ashishh-81/chat-devops-project.git"
         dest: /home/ubuntu/chat-app
+        force: yes   # IMPORTANT (update code every time)
 
     - name: Install Python dependencies
       pip:
-        requirements: /home/ubuntu/chat-app/app/requirements.txt
+        requirements: /home/ubuntu/chat-app/requirements.txt
+
+    - name: Install SocketIO extra deps
+      pip:
+        name:
+          - flask-socketio
+          - eventlet
+
+    - name: Kill old app if running
+      shell: pkill -f app.py || true
 
     - name: Run Flask app
-      shell: nohup python3 /home/ubuntu/chat-app/app/app.py &
+      shell: nohup python3 /home/ubuntu/chat-app/app.py &
