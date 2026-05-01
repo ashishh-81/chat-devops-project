@@ -11,7 +11,7 @@ pipeline {
 
         stage('Terraform') {
             steps {
-                sh '''
+                bat '''
                 cd terraform
                 terraform init
                 terraform apply -auto-approve
@@ -21,7 +21,7 @@ pipeline {
 
         stage('Ansible Deploy') {
             steps {
-                sh '''
+                bat '''
                 cd ansible
                 ansible-playbook -i inventory playbook.yml
                 '''
