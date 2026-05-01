@@ -3,7 +3,8 @@ provider "aws" {
 }
 
 resource "aws_security_group" "chat_sg_2" {
-  name = "chat-sg-2"
+  name   = "chat-sg-2"
+  vpc_id = "vpc-06a676484538562b8"
 
   ingress {
     from_port   = 22
