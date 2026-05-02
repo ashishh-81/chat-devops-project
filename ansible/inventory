@@ -1,2 +1,2 @@
 [servers]
-52.66.205.81 ansible_user=ubuntu ansible_ssh_private_key_file=chat-key.pem
+43.205.127.149 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ashis/chat-key.pem 

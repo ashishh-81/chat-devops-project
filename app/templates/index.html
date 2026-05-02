@@ -2,31 +2,121 @@
 <html>
 <head>
     <title>Real-Time Chat</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-box {
+            width: 400px;
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        #messages {
+            list-style: none;
+            padding: 0;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        li {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 8px;
+            background: #334155;
+        }
+
+        .me {
+            background: #22c55e;
+            text-align: right;
+        }
+
+        input {
+            width: 75%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #3b82f6;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Real-Time Chat</h2>
+<div class="chat-box">
+    <h2>🔥 Chat Room</h2>
 
-<input id="msg" type="text" placeholder="Enter message">
-<button onclick="sendMsg()">Send</button>
+    <ul id="messages"></ul>
 
-<ul id="messages"></ul>
+    <input id="msg" placeholder="Type message...">
+    <button onclick="sendMsg()">Send</button>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 
 <script>
     var socket = io();
 
+    let username = prompt("Enter your name:");
+
     function sendMsg() {
         let msg = document.getElementById("msg").value;
-        socket.send(msg);
+
+        let data = {
+            user: username,
+            text: msg
+        };
+
+        socket.send(JSON.stringify(data));
         document.getElementById("msg").value = "";
     }
 
     socket.on('message', function(msg) {
+        let data = JSON.parse(msg);
+
         let li = document.createElement("li");
-        li.innerText = msg;
+
+        if (data.user === username) {
+            li.classList.add("me");
+            li.innerText = "You: " + data.text;
+        } else {
+            li.innerText = data.user + ": " + data.text;
+        }
+
         document.getElementById("messages").appendChild(li);
+
+        // auto scroll
+        let box = document.getElementById("messages");
+        box.scrollTop = box.scrollHeight;
+    });
+
+    // Enter key support
+    document.getElementById("msg").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            sendMsg();
+        }
     });
 </script>
 
